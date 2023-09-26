@@ -4,3 +4,23 @@
     width: 150px;
     padding-left: 5px;
 }
+.sort{
+    list-style: none;
+}
+li{
+    display: none;
+}
+li.active{
+    display: flex;
+    flex-direction: column;
+}
+.pointer{
+    margin-top: 50px;
+    margin-left: 125px;
+}
+ul{
+    margin-top: -20px;
+}
+li button{
+    width: 150px
+}
