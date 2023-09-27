@@ -50,17 +50,91 @@ for (let i of cars){
 document.write("Total price: " + total_price);
 
 function renderCars(){
-    let carList = document.getElementById("cars");
-    while(carList.firstChild){
-        carList.removeChild(carList.firstChild)
+    let containers = document.querySelectorAll(".car_container");
+    for (let i in cars){
+        let container = containers[i];
+        let speed_div = container.querySelector(".speed");
+        let model_div = container.querySelector(".model");
+        let power_div = container.querySelector(".power");
+        let price_div = container.querySelector(".price");
+        speed_div.textContent = null;
+        model_div.textContent = null;
+        power_div.textContent = null;
+        price_div.textContent = null;
     }
     displayCars();
 } 
-function sortCarsByPower(){
+function sortCarsByPowerDesc(){
     cars.sort(function(a, b){
         return b.power - a.power;
     });
     renderCars();
 }
-const sortButton = document.getElementById("sort");
-sortButton.addEventListener("click", sortCarsByPower);
+function sortCarsByPowerAsc(){
+    cars.sort(function(a, b){
+        return a.power - b.power;
+    });
+    renderCars();
+}
+function sortCarsByPriceDesc(){
+    cars.sort(function(a, b){
+        return b.price - a.price;
+    });
+    renderCars();
+}
+function sortCarsByPriceAsc(){
+    cars.sort(function(a, b){
+        return a.price - b.price;
+    });
+    renderCars();
+}
+function sortCarsBySpeedDesc(){
+    cars.sort(function(a, b){
+        return b.max_speed - a.max_speed;
+    });
+    renderCars();
+}
+function sortCarsBySpeedAsc(){
+    cars.sort(function(a, b){
+        return a.max_speed - b.max_speed;
+    });
+    renderCars();
+}
+const PowerDes = document.getElementById("power__des");
+PowerDes.addEventListener("click", sortCarsByPowerDesc);
+const PowerAsc = document.getElementById("power__asc");
+PowerAsc.addEventListener("click", sortCarsByPowerAsc);
+const PriceDes = document.getElementById("price__des");
+PriceDes.addEventListener("click", sortCarsByPriceDesc);
+const PriceAsc = document.getElementById("price__asc");
+PriceAsc.addEventListener("click", sortCarsByPriceAsc);
+const SpeedDes = document.getElementById("speed__des");
+SpeedDes.addEventListener("click", sortCarsBySpeedDesc);
+const SpeedAsc = document.getElementById("speed__asc");
+SpeedAsc.addEventListener("click", sortCarsBySpeedAsc);
+const pointer = document.querySelector(".pointer");
+const list = document.querySelectorAll(".sort li");
+pointer.addEventListener('click', () => {
+    list.forEach((item) => {item.classList.toggle('active');
+});
+});
+
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+const resultDiv = document.getElementById("result");
+searchButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  resultDiv.classList.toggle('active');
+  const targetModel = searchInput.value;
+  const foundCar = cars.find(function(car) {
+    return car.model === targetModel;
+  });
+  if (foundCar) {
+    resultDiv.textContent = `Model: ${foundCar.model}\n
+    Max speed: ${foundCar.max_speed}\n
+    Power: ${foundCar.power}\n
+    Price: ${foundCar.price}`;
+  } else {
+    resultDiv.textContent = 'Car not found.';
+  }
+});
