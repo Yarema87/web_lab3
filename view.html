@@ -27,6 +27,7 @@
             <div class="price"></div>
         </div>
     </div>
+    <div class="total"></div>
     <button class="pointer">&#9660</button>
     <ul class = sort> Sort cars by:
         <li><button id="power__des">Power (descending)</button></li>
@@ -40,6 +41,18 @@
         <input type="text" id="searchInput" placeholder="Enter a model">
         <button id="searchButton">Search</button>
         <div id="result"></div>
+    </form>
+    <button class="add_car_button">Add new car</button>
+    <form class="add_car_form">
+        <label for="add_car_speed"></label>
+        <input type="text" placeholder="Enter max speed" class="add_car_input" id="add_car_speed" name="speed">
+        <label for="add_car_power"></label>
+        <input type="text" placeholder="Enter power" class="add_car_input" id="add_car_power" name="power">
+        <label for="add_car_model"></label>
+        <input type="text" placeholder="Enter model" class="add_car_input" id="add_car_model" name="model">
+        <label for="add_car_price"></label>
+        <input type="text" placeholder="Enter price" class="add_car_input" id="add_car_price" name="price">
+        <input type="submit" value="Submit adding">
     </form>
     <script src="view.js"></script>
 </body>

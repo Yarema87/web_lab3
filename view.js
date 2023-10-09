@@ -43,11 +43,17 @@ function displayCars(){
 }
 displayCars();
 
-let total_price = 0;
-for (let i of cars){
-    total_price += i.price;
+function total_price(){
+    let container = document.querySelector(".total");
+    let total_price = 0;
+    for (let i of cars){
+        total_price += i.price;
+    }
+    let total_price_paragraph = document.createElement("p");
+    total_price_paragraph.textContent = ("Total price: " + total_price);
+    container.appendChild(total_price_paragraph);
 }
-document.write("Total price: " + total_price);
+total_price();
 
 function renderCars(){
     let containers = document.querySelectorAll(".car_container");
@@ -119,23 +125,82 @@ pointer.addEventListener('click', () => {
 });
 });
 
-const searchInput = document.getElementById("searchInput");
-const searchButton = document.getElementById("searchButton");
-const resultDiv = document.getElementById("result");
-searchButton.addEventListener("click", function(event) {
-  event.preventDefault();
-  resultDiv.classList.toggle('active');
-  const targetModel = searchInput.value;
-  const foundCar = cars.find(function(car) {
-    return car.model === targetModel;
-  });
-  if (foundCar) {
-    resultDiv.textContent = `Model: ${foundCar.model}\n
-    Max speed: ${foundCar.max_speed}\n
-    Power: ${foundCar.power}\n
-    Price: ${foundCar.price}`;
-  } else {
-    resultDiv.textContent = 'Car not found.';
-  }
-});
+function searchCar(){
+    const searchInput = document.getElementById("searchInput");
+    const searchButton = document.getElementById("searchButton");
+    const resultDiv = document.getElementById("result");
+    searchButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    resultDiv.classList.toggle('active');
+    const targetModel = searchInput.value;
+    const foundCar = cars.find(function(car) {
+        return car.model === targetModel;
+    });
+    if (foundCar) {
+        resultDiv.textContent = `Model: ${foundCar.model}\n
+        Max speed: ${foundCar.max_speed}\n
+        Power: ${foundCar.power}\n
+        Price: ${foundCar.price}`;
+    } else {
+        resultDiv.textContent = 'Car not found.';
+    }
+    });
+}
+searchCar();
+
+function createNewCar(){
+    const speedValue = parseInt(document.getElementById("add_car_speed").value);
+    const powerValue = parseInt(document.getElementById("add_car_power").value);
+    const modelValue = document.getElementById("add_car_model").value;
+    const priceValue = parseInt(document.getElementById("add_car_price").value);
+    const newCar = {
+        power: powerValue,
+        model: modelValue,
+        max_speed: speedValue,
+        price: priceValue
+    }
+    cars.push(newCar);
+    const newOuterContainer = document.createElement("div");
+    newOuterContainer.classList.add("car_container");
+    const allCars = document.querySelector(".cars");
+    allCars.appendChild(newOuterContainer);
+    const newSpeedContainer = document.createElement("div");
+    const newPowerContainer = document.createElement("div");
+    const newModelContainer = document.createElement("div");
+    const newPriceContainer = document.createElement("div");
+    newSpeedContainer.classList.add('speed');
+    newPowerContainer.classList.add('power');
+    newModelContainer.classList.add('model');
+    newPriceContainer.classList.add('price');
+    newOuterContainer.appendChild(newSpeedContainer);
+    newOuterContainer.appendChild(newPowerContainer);
+    newOuterContainer.appendChild(newModelContainer);
+    newOuterContainer.appendChild(newPriceContainer);
+    const newSpeedParagraph = document.createElement("p");
+    const newPowerParagraph = document.createElement("p");
+    const newModelParagraph = document.createElement("p");
+    const newPriceParagraph = document.createElement("p");
+    newSpeedParagraph.textContent = "Max speed: " + newCar.max_speed;
+    newPowerParagraph.textContent = "Power: " + newCar.power;
+    newModelParagraph.textContent = "Model: " + newCar.model;
+    newPriceParagraph.textContent = "Price: " + newCar.price;
+    newSpeedContainer.appendChild(newSpeedParagraph);
+    newPowerContainer.appendChild(newPowerParagraph);
+    newModelContainer.appendChild(newModelParagraph);
+    newPriceContainer.appendChild(newPriceParagraph);
+}
+
+const addButton = document.querySelector(".add_car_button");
+const addForm = document.querySelector(".add_car_form");
+const confirmButton = document.querySelector(".confirm_add");
+addButton.addEventListener("click", function(){
+    addForm.classList.add('active');
+})
+document.addEventListener('DOMContentLoaded', function(){
+    document.querySelector('.add_car_form').addEventListener('submit', function (e){
+        e.preventDefault();
+        createNewCar();
+    })
+})
+
 
