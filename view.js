@@ -118,3 +118,24 @@ pointer.addEventListener('click', () => {
     list.forEach((item) => {item.classList.toggle('active');
 });
 });
+
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
+const resultDiv = document.getElementById("result");
+searchButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  resultDiv.classList.toggle('active');
+  const targetModel = searchInput.value;
+  const foundCar = cars.find(function(car) {
+    return car.model === targetModel;
+  });
+  if (foundCar) {
+    resultDiv.textContent = `Model: ${foundCar.model}\n
+    Max speed: ${foundCar.max_speed}\n
+    Power: ${foundCar.power}\n
+    Price: ${foundCar.price}`;
+  } else {
+    resultDiv.textContent = 'Car not found.';
+  }
+});
+

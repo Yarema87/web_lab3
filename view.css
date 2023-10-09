@@ -2,6 +2,7 @@
     display: inline-block;
     border: 2px solid black;
     width: 150px;
+    height: 180px;
     padding-left: 5px;
 }
 .sort{
@@ -23,4 +24,17 @@ ul{
 }
 li button{
     width: 150px
+}
+.found{
+    border: 2px solid greenyellow;
+}
+#result{
+    display: none;
+}
+#result.active{
+    display: block;
+    border: 2px solid black;
+    width: 150px;
+    height: 180px;
+    padding-left: 5px;
 }
