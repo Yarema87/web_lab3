@@ -138,3 +138,4 @@ searchButton.addEventListener("click", function(event) {
     resultDiv.textContent = 'Car not found.';
   }
 });
+
