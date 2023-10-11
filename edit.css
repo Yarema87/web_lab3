@@ -1,0 +1,6 @@
+.editing_form{
+    display: none;
+}
+.editing_form.active{
+    display: block;
+}

@@ -1,4 +1,4 @@
-const cars = [
+let cars = [
     {
         power: 570,
         model: "Ford Mustang",
@@ -18,36 +18,6 @@ const cars = [
         price: 5900
     }
 ];
-function displayCars(){
-    let containers = document.querySelectorAll(".car_container");
-    for (let i in cars){
-        let car = cars[i];
-        let container = containers[i];
-        let speed_div = container.querySelector(".speed");
-        let speed_paragraph = document.createElement("p");
-        speed_paragraph.textContent = "Max speed: " + car.max_speed;
-        speed_div.appendChild(speed_paragraph);
-        let model_div = container.querySelector(".model");
-        let model_paragraph = document.createElement("p");
-        model_paragraph.textContent = "Model: " + car.model;
-        model_div.appendChild(model_paragraph);
-        let power_div = container.querySelector(".power");
-        let power_paragraph = document.createElement("p");
-        power_paragraph.textContent = "Power: " + car.power;
-        power_div.appendChild(power_paragraph);
-        let price_div = container.querySelector(".price");
-        let price_paragraph = document.createElement("p");
-        price_paragraph.textContent = "Price: " + car.price;
-        price_div.appendChild(price_paragraph);
-    };
-}
-displayCars();
-
-let total_price = 0;
-for (let i of cars){
-    total_price += i.price;
-}
-document.write("Total price: " + total_price);
 
 function renderCars(){
     let containers = document.querySelectorAll(".car_container");
@@ -57,12 +27,12 @@ function renderCars(){
         let model_div = container.querySelector(".model");
         let power_div = container.querySelector(".power");
         let price_div = container.querySelector(".price");
-        speed_div.textContent = null;
-        model_div.textContent = null;
-        power_div.textContent = null;
-        price_div.textContent = null;
+        speed_div.innerHTML = null;
+        model_div.innerHTML = null;
+        power_div.innerHTML = null;
+        price_div.innerHTML = null;
     }
-    displayCars();
+    displayObjectsOnPage(cars);
 } 
 function sortCarsByPowerDesc(){
     cars.sort(function(a, b){
@@ -119,23 +89,77 @@ pointer.addEventListener('click', () => {
 });
 });
 
-const searchInput = document.getElementById("searchInput");
-const searchButton = document.getElementById("searchButton");
-const resultDiv = document.getElementById("result");
-searchButton.addEventListener("click", function(event) {
-  event.preventDefault();
-  resultDiv.classList.toggle('active');
-  const targetModel = searchInput.value;
-  const foundCar = cars.find(function(car) {
-    return car.model === targetModel;
-  });
-  if (foundCar) {
-    resultDiv.textContent = `Model: ${foundCar.model}\n
-    Max speed: ${foundCar.max_speed}\n
-    Power: ${foundCar.power}\n
-    Price: ${foundCar.price}`;
-  } else {
-    resultDiv.textContent = 'Car not found.';
-  }
+function searchCar(){
+    const searchInput = document.getElementById("searchInput");
+    const searchButton = document.getElementById("searchButton");
+    const resultDiv = document.getElementById("result");
+    searchButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    resultDiv.classList.toggle('active');
+    const targetModel = searchInput.value;
+    const foundCar = cars.find(function(car) {
+        return car.model === targetModel;
+    });
+    if (foundCar) {
+        resultDiv.textContent = `Model: ${foundCar.model}\n
+        Max speed: ${foundCar.max_speed}\n
+        Power: ${foundCar.power}\n
+        Price: ${foundCar.price}`;
+    } else {
+        resultDiv.textContent = 'Car not found.';
+    }
+    });
+}
+searchCar();
+
+function displayObjectsOnPage(objects) {
+    const allCars = document.querySelector(".cars");
+    allCars.innerHTML = ''
+    for (let index = 0; index < objects.length; index++) {
+        const displayElement = document.createElement("div");
+        displayElement.id = "displayObject";
+        displayElement.classList.add("car_container");
+        displayElement.innerHTML = '';
+        const object = objects[index];
+        const objectDiv = document.createElement('div');
+        objectDiv.innerHTML = `
+            <div class="speed">
+            <p>Max speed: ${object.max_speed}</p>
+            </div>
+            <div class="power">
+            <p>Power: ${object.power}</p>
+            </div>
+            <div class="model">
+            <p>Model: ${object.model}</p>
+            </div>
+            <div class="price">
+            <p>Price: ${object.price}</p>
+            </div>
+        `;
+        displayElement.appendChild(objectDiv);
+        
+        allCars.appendChild(displayElement)
+    }
+    
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('.add_car_form');
+    cars = JSON.parse(localStorage.getItem("cars"));
+    displayObjectsOnPage(cars);
+    localStorage.setItem("cars", JSON.stringify(cars));
+    
 });
 
+function total_price(){
+    let container = document.querySelector(".total");
+    let total_price = 0;
+    for (let i of cars){
+        total_price += i.price;
+    }
+    let total_price_paragraph = document.createElement("p");
+    total_price_paragraph.textContent = ("Total price: " + total_price);
+    container.appendChild(total_price_paragraph);
+}
+
+total_price();
