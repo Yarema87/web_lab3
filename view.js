@@ -145,9 +145,35 @@ function displayObjectsOnPage(objects) {
 
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('.add_car_form');
-    cars = JSON.parse(localStorage.getItem("cars"));
-    displayObjectsOnPage(cars);
-    localStorage.setItem("cars", JSON.stringify(cars));
+    const url = 'http://localhost:5000/view';
+    //cars = JSON.parse(localStorage.getItem("cars"));
+    fetch(url)
+        .then(response => response.json())
+        .then(cars => {
+            console.log('Data received:', cars);
+            displayObjectsOnPage(cars);
+            for (i of cars){
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(i)
+                })
+                .then(response =>{
+                    console.log('Car added successfully', response);
+                })
+                .catch(error => {
+                    console.error('Some error occured', error);
+                });
+            };
+        
+        })
+        .catch(error =>{
+            console.error('Some error occured:', error);
+        });
+    
+    //localStorage.setItem("cars", JSON.stringify(cars));
     
 });
 
