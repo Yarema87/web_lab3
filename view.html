@@ -7,26 +7,8 @@
     <link rel="stylesheet" href="view.css">
 </head>
 <body>
-    <div class="cars">
-        <div class="car_container">
-            <div class="speed"></div>
-            <div class="power"></div>
-            <div class="model"></div>
-            <div class="price"></div>
-        </div>
-        <div class="car_container">
-            <div class="speed"></div>
-            <div class="power"></div>
-            <div class="model"></div>
-            <div class="price"></div>
-        </div>
-        <div class="car_container">
-            <div class="speed"></div>
-            <div class="power"></div>
-            <div class="model"></div>
-            <div class="price"></div>
-        </div>
-    </div>
+    <div class="cars"></div> 
+    <div class="total"></div>
     <button class="pointer">&#9660</button>
     <ul class = sort> Sort cars by:
         <li><button id="power__des">Power (descending)</button></li>
@@ -41,6 +23,12 @@
         <button id="searchButton">Search</button>
         <div id="result"></div>
     </form>
+    <a href="add.html">
+        <button class="add_car_button">Add new car</button>
+    </a>
+    <a href="edit.html">
+        <button>Edit some car</button>
+    </a>
     <script src="view.js"></script>
 </body>
 </html>

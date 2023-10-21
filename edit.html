@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit page</title>
+    <link rel="stylesheet" href="edit.css">
+</head>
+<body>
+    <h3>Which car do you want to edit?</h3>
+    <form class="choose_model">
+        <input type="text" placeholder="Enter a model" id="model_to_edit">
+        <input type="submit" value="Submit choise">
+    </form>
+    <form class="editing_form">
+        <input type="number" id="speed_edit">
+        <input type="number" id="power_edit">
+        <input type="text" id="model_edit">
+        <input type="number" id="price_edit">
+        <input type="submit" value="Finish editing">
+    </form>
+    <a href="view.html">
+        <button>Return to the "View" page</button>
+    </a>
+    <script src="edit.js"></script>
+</body>
+</html>
