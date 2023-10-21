@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, request, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
+#cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///car.db'
 db = SQLAlchemy(app)
 
@@ -14,6 +16,7 @@ class Car(db.Model):
     price = db.Column(db.Integer)
 
 @app.route('/view', methods=['POST'])
+@cross_origin()
 def contain_cars():
     if request.method == 'POST':
         data = request.get_json()
@@ -22,6 +25,7 @@ def contain_cars():
         return jsonify({'message': 'Cars got successfully'})
 
 @app.route('/add', methods=['POST'])
+@cross_origin()
 def add_car():
     if request.method == 'POST':
         data = request.get_json()
@@ -36,6 +40,7 @@ def add_car():
         return jsonify({'message': 'Cars added successfully'})
     
 @app.route('/add', methods=['GET'])
+@cross_origin()
 def get_car_on_add():
     cars = session.get('cars')
     for car in cars:
@@ -46,6 +51,7 @@ def get_car_on_add():
                         })
     
 @app.route('/view', methods=['GET'])
+@cross_origin()
 def get_car_on_view():
     cars = session.get('cars')
     for car in cars:
@@ -56,6 +62,7 @@ def get_car_on_view():
                         })
     
 @app.route('/edit', methods=['GET'])
+@cross_origin()
 def get_car_on_edit():
     cars = session.get('cars')
     for car in cars:
@@ -66,6 +73,7 @@ def get_car_on_edit():
                         })
     
 @app.route('/edit', methods=['POST'])
+@cross_origin
 def edit_car():
     if request.method == 'POST':
         edited_car = request.get_json()
