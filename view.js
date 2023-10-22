@@ -145,9 +145,52 @@ function displayObjectsOnPage(objects) {
 
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('.add_car_form');
-    cars = JSON.parse(localStorage.getItem("cars"));
-    displayObjectsOnPage(cars);
-    localStorage.setItem("cars", JSON.stringify(cars));
+    const url = 'http://localhost:5000/view';
+    const get_url = 'http://localhost:5000/get';
+    cars.forEach(car => {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(car),
+        })
+        .then(response => {
+            console.log('Car got successfully:', response);
+        })
+        .catch(error => {
+            console.error('Some error occured:', error);
+        });
+    });
+    
+    //cars = JSON.parse(localStorage.getItem("cars"));
+    fetch(get_url)
+        .then(response => response.json())
+        .then(cars => {
+            console.log('Data received:', cars); 
+        })
+        .catch(error =>{
+            console.error('Some error occured:', error);
+        });
+        displayObjectsOnPage(cars);
+
+    cars.forEach(car => {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(car),
+        })
+        .then(response => {
+            console.log('Car added successfully:', response);
+        })
+        .catch(error => {
+            console.error('Some error occured:', error);
+        });
+    });
+    
+    //localStorage.setItem("cars", JSON.stringify(cars));
     
 });
 

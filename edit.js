@@ -2,7 +2,12 @@ const speedEdit = document.getElementById("speed_edit");
 const powerEdit = document.getElementById("power_edit");
 const modelEdit = document.getElementById("model_edit");
 const priceEdit = document.getElementById("price_edit");
-const cars = JSON.parse(localStorage.getItem("cars"));
+const url = 'http://localhost:5000/edit';
+const get_url = 'http://localhost:5000/get';
+fetch(get_url)
+        .then(response => response.json())
+        .then(cars => {
+            console.log('Data received:', cars);})
 
 const chooseModel = document.querySelector(".choose_model");    
 chooseModel.addEventListener('submit', function(e){
@@ -29,5 +34,19 @@ finishEditing.addEventListener('submit', function(e){
     editedCar.power = parseInt(powerEdit.value);
     editedCar.model = modelEdit.value;
     editedCar.price = parseInt(priceEdit.value);
-    localStorage.setItem('cars', JSON.stringify(cars));
-})
+    //localStorage.setItem('cars', JSON.stringify(cars));
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedCar)
+    })
+    .then(response =>{
+        console.log('Car edited successfully:', response);
+    })
+    .catch(error => {
+        console.error('Some error occured:', error);
+    });
+});
+
